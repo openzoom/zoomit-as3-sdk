@@ -15,21 +15,13 @@
 //   limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package it.zoom.api
+package it.zoom.api.events
 {
 
-import flash.events.EventDispatcher;
+import flash.events.ErrorEvent;
+import flash.events.Event;
 
-import it.zoom.api.utils.string.format;
-
-/**
- *  The ZoomItService class provides access to the Zoom.it web API.
- *
- *  @see http://api.zoom.it
- *
- *  @author Daniel Gasienica
- */
-public final class ZoomItService extends EventDispatcher
+public final class FaultEvent extends ErrorEvent
 {
     //--------------------------------------------------------------------------
     //
@@ -37,10 +29,7 @@ public final class ZoomItService extends EventDispatcher
     //
     //--------------------------------------------------------------------------
 
-    private static const API_ENDPOINT:String = "http://api.zoom.it"
-    private static const API_VERSION:String = "v1"
-
-    private static const CONTENT_RESOURCE:String = "content"
+    public static const FAULT:String = "fault"
 
     //--------------------------------------------------------------------------
     //
@@ -51,28 +40,28 @@ public final class ZoomItService extends EventDispatcher
     /**
      *  Constructor.
      */
-    public function ZoomItService()
+    public function FaultEvent(type:String,
+                               bubbles:Boolean=false,
+                               cancelable:Boolean=false,
+                               text:String="")
     {
+        super(type, bubbles, cancelable, text)
     }
 
     //--------------------------------------------------------------------------
     //
-    //  Methods
+    //  Overridden methods: Event
     //
     //--------------------------------------------------------------------------
 
-    public function getContentInfoById(id:String):ServiceCall
+    override public function clone():Event
     {
-        var url:String = format("{0}/{1}/{2}/{3}?format=xml",
-            API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, id)
-        return new ServiceCall(url)
+        return new FaultEvent(type, bubbles, cancelable, text)
     }
 
-    public function getContentInfoByURL(url:String):ServiceCall
+    override public function toString():String
     {
-        var url:String = format("{0}/{1}/{2}/?url={3}&format=xml",
-            API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, encodeURI(url))
-        return new ServiceCall(url)
+        return formatToString("FaultEvent", "type", "bubbles", "cancelable", "text")
     }
 }
 

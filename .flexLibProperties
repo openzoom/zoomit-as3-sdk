@@ -4,6 +4,9 @@
     <classEntry path="it.zoom.api.ZoomItService"/>
     <classEntry path="it.zoom.api.ContentInfo"/>
     <classEntry path="it.zoom.api.DZIInfo"/>
+    <classEntry path="it.zoom.api.ServiceCall"/>
+    <classEntry path="it.zoom.api.events.ResultEvent"/>
+    <classEntry path="it.zoom.api.events.FaultEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
