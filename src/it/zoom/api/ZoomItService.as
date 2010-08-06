@@ -61,18 +61,18 @@ public final class ZoomItService extends EventDispatcher
     //
     //--------------------------------------------------------------------------
 
-    public function getContentInfoById(id:String):ServiceCall
+    public function getContentInfoById(id:String):AsyncRequest
     {
         var url:String = format("{0}/{1}/{2}/{3}?format=xml",
             API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, id)
-        return new ServiceCall(url)
+        return new AsyncRequest(url)
     }
 
-    public function getContentInfoByURL(url:String):ServiceCall
+    public function getContentInfoByURL(url:String):AsyncRequest
     {
         var url:String = format("{0}/{1}/{2}/?url={3}&format=xml",
             API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, encodeURI(url))
-        return new ServiceCall(url)
+        return new AsyncRequest(url)
     }
 }
 

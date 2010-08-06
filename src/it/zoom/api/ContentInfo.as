@@ -18,6 +18,8 @@
 package it.zoom.api
 {
 
+import it.zoom.api.utils.formatClassToString;
+
 /**
  *  The ContentInfo class represents a piece of content on Zoom.it.
  *
@@ -48,6 +50,17 @@ public final class ContentInfo
                                 attributionURL:String,
                                 dzi:DZIInfo=null)
     {
+        _id = id
+        _url = url
+        _ready = ready
+        _failed = failed
+        _progress = progress
+        _shareURL = shareURL
+        _embedHTML = embedHTML
+        _title = title
+        _attributionText = attributionText
+        _attributionURL = attributionURL
+        _dzi = dzi
     }
 
     /**
@@ -55,7 +68,23 @@ public final class ContentInfo
      */
     public static function fromXML(xml:XML):ContentInfo
     {
-        return null
+        var id:String = xml.id
+        var url:String = xml.url
+        var ready:Boolean = xml.ready == "true"
+        var failed:Boolean = xml.failed == "true"
+        var progress:Number = parseFloat(xml.progress)
+        var shareURL:String = xml.shareURL
+        var embedHTML:String = xml.embedHTML
+        var title:String = xml.title
+        var attributionText:String = xml.attributionText
+        var attributionURL:String = xml.attributionURL
+        var dzi:DZIInfo = null
+            
+        if (xml.hasOwnProperty("dzi"))
+            dzi = DZIInfo.fromXML(xml.dzi[0])
+
+        return new ContentInfo(id, url, ready, failed, progress, shareURL,
+            embedHTML, title, attributionText, attributionURL, dzi)
     }
 
     //--------------------------------------------------------------------------
@@ -259,7 +288,9 @@ public final class ContentInfo
 
     public function toString():String
     {
-        return ""
+        return formatClassToString(this, "id", "url", "ready",
+            "failed", "progress", "shareURL", "embedHTML", "title",
+            "attributionText", "attributionURL", "dzi")
     }
 }
 

@@ -18,6 +18,8 @@
 package it.zoom.api
 {
 
+import it.zoom.api.utils.formatClassToString;
+
 /**
  *  The DZIInfo class represents a Microsoft Deep Zoom image.
  *
@@ -45,6 +47,12 @@ public final class DZIInfo
                             tileOverlap:uint,
                             tileFormat:String)
     {
+        _url = url
+        _width = width
+        _height = height
+        _tileSize = tileSize
+        _tileOverlap = tileOverlap
+        _tileFormat = tileFormat
     }
 
     /**
@@ -52,7 +60,14 @@ public final class DZIInfo
      */
     public static function fromXML(xml:XML):DZIInfo
     {
-        return null
+        var url:String = xml.url
+        var width:uint = xml.width
+        var height:uint = xml.height
+        var tileSize:uint = xml.tileSize
+        var tileOverlap:uint = xml.tileOverlap
+        var tileFormat:String = xml.tileFormat
+
+        return new DZIInfo(url, width, height, tileSize, tileOverlap, tileFormat)
     }
 
     //--------------------------------------------------------------------------
@@ -165,13 +180,14 @@ public final class DZIInfo
 
     //--------------------------------------------------------------------------
     //
-    //  Debug
+    //  Overridden methods: Object
     //
     //--------------------------------------------------------------------------
 
     public function toString():String
     {
-        return ""
+        return formatClassToString(this, "url", "width", "height", "tileSize",
+            "tileOverlap", "tileFormat")
     }
 }
 

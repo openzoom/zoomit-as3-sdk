@@ -19,6 +19,7 @@ package it.zoom.api.events
 {
 
 import flash.events.Event;
+import flash.net.URLRequest;
 
 public class ResultEvent extends Event
 {

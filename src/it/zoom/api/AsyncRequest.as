@@ -40,8 +40,16 @@ import it.zoom.api.events.ResultEvent;
 /**
  *  @author Daniel Gasienica
  */
-public final class ServiceCall extends EventDispatcher
+public final class AsyncRequest extends EventDispatcher
 {
+    //--------------------------------------------------------------------------
+    //
+    //  Class constants
+    //
+    //--------------------------------------------------------------------------
+
+    private static const UNKNOWN_ERROR_MESSAGE:String = "Unknown error."
+
     //--------------------------------------------------------------------------
     //
     //  Constructor
@@ -53,7 +61,7 @@ public final class ServiceCall extends EventDispatcher
      *
      *  Constructor.
      */
-    public function ServiceCall(url:String)
+    public function AsyncRequest(url:String)
     {
         request = new URLRequest(url)
         loader = new URLLoader(request)
@@ -90,6 +98,28 @@ public final class ServiceCall extends EventDispatcher
     private function start():void
     {
         loader.load(request)
+    }
+
+    /**
+     *  @private
+     */
+    private function parseContentInfo(responseXML:XML):ContentInfo
+    {
+        if (responseXML.hasOwnProperty("content"))
+            return ContentInfo.fromXML(responseXML.content[0])
+
+        return null
+    }
+
+    /**
+     *  @private
+     */
+    private function parseError(responseXML:XML):String
+    {
+        if (responseXML.hasOwnProperty("error"))
+            return responseXML.error[0].toString()
+
+        return UNKNOWN_ERROR_MESSAGE
     }
 
     //--------------------------------------------------------------------------
@@ -143,17 +173,25 @@ public final class ServiceCall extends EventDispatcher
 
     private function loader_completeHandler(event:Event):void
     {
-        var data:* = loader.data
-        var resultEvent:ResultEvent =
-            new ResultEvent(ResultEvent.RESULT, false, false, data)
-        dispatchEvent(resultEvent)
+        var event:Event
+        var responseXML:XML = new XML(loader.data)
+
+        // Try parsing
+        var contentInfo:ContentInfo = parseContentInfo(responseXML)
+
+        if (contentInfo)
+            event = new ResultEvent(ResultEvent.RESULT, false, false, contentInfo)
+        else
+            event = new FaultEvent(FaultEvent.FAULT, false, false, parseError(responseXML))
+
+        dispatchEvent(event)
 
         dispose()
     }
 
     private function loader_errorHandler(event:Event):void
     {
-        var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT)
+        var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT, false, false, UNKNOWN_ERROR_MESSAGE)
         dispatchEvent(faultEvent)
 
         dispose()
