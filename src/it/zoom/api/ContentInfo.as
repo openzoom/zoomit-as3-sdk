@@ -73,13 +73,22 @@ public final class ContentInfo
         var ready:Boolean = xml.ready == "true"
         var failed:Boolean = xml.failed == "true"
         var progress:Number = parseFloat(xml.progress)
-        var shareURL:String = xml.shareURL
-        var embedHTML:String = xml.embedHTML
-        var title:String = xml.title
-        var attributionText:String = xml.attributionText
-        var attributionURL:String = xml.attributionURL
-        var dzi:DZIInfo = null
-
+        var shareURL:String = xml.shareUrl
+        var embedHTML:String = xml.embedHtml
+            
+        var title:String
+        if (xml.hasOwnProperty("title"))
+            title = xml.title
+                
+        var attributionText:String
+        if (xml.hasOwnProperty("attributionText"))
+            attributionText = xml.attributionText
+            
+        var attributionURL:String
+        if (xml.hasOwnProperty("attributionUrl"))
+            attributionURL = xml.attributionUrl
+            
+        var dzi:DZIInfo
         if (xml.hasOwnProperty("dzi"))
             dzi = DZIInfo.fromXML(xml.dzi[0])
 
