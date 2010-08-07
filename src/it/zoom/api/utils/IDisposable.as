@@ -19,8 +19,7 @@ package it.zoom.api.utils
 {
 
 /**
- *  Interface for types that can release the resources they hold on to
- *  and make themselves eligible for garbage collection.
+ *  The IDisposable interface defines a method to release allocated resources.
  */
 public interface IDisposable
 {
@@ -31,8 +30,8 @@ public interface IDisposable
     //--------------------------------------------------------------------------
 
     /**
-     *  Releases all resources this object holds on to.
-     *  Do not use object after calling dispose.
+     *  Performs application-defined tasks associated with freeing, releasing,
+     *  or resetting unmanaged resources. Do not use object after calling dispose.
      */
     function dispose():void
 }

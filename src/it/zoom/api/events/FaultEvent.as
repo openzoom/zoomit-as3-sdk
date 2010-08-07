@@ -21,6 +21,8 @@ package it.zoom.api.events
 import flash.events.ErrorEvent;
 import flash.events.Event;
 
+import it.zoom.api.AsyncRequest;
+
 public final class FaultEvent extends ErrorEvent
 {
     //--------------------------------------------------------------------------
@@ -43,9 +45,28 @@ public final class FaultEvent extends ErrorEvent
     public function FaultEvent(type:String,
                                bubbles:Boolean=false,
                                cancelable:Boolean=false,
+                               request:AsyncRequest=null,
                                text:String="")
     {
         super(type, bubbles, cancelable, text)
+
+        _request = request
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Properties
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  @private
+     */
+    private var _request:AsyncRequest
+
+    public function get request():AsyncRequest
+    {
+        return _request
     }
 
     //--------------------------------------------------------------------------
@@ -56,12 +77,12 @@ public final class FaultEvent extends ErrorEvent
 
     override public function clone():Event
     {
-        return new FaultEvent(type, bubbles, cancelable, text)
+        return new FaultEvent(type, bubbles, cancelable, request, text)
     }
 
     override public function toString():String
     {
-        return formatToString("FaultEvent", "type", "bubbles", "cancelable", "text")
+        return formatToString("FaultEvent", "type", "bubbles", "cancelable", "request", "text")
     }
 }
 

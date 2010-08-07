@@ -79,7 +79,7 @@ public final class ContentInfo
         var attributionText:String = xml.attributionText
         var attributionURL:String = xml.attributionURL
         var dzi:DZIInfo = null
-            
+
         if (xml.hasOwnProperty("dzi"))
             dzi = DZIInfo.fromXML(xml.dzi[0])
 

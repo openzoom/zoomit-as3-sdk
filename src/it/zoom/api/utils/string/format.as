@@ -19,7 +19,7 @@ package it.zoom.api.utils.string
 {
 
 /**
- *  Replaces each format item in a specified string with the
+ *  The format function replaces each format item in a specified string with the
  *  text equivalent of a corresponding object's value.
  */
 public function format(string:String, ...args):String

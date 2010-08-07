@@ -19,7 +19,8 @@ package it.zoom.api.events
 {
 
 import flash.events.Event;
-import flash.net.URLRequest;
+
+import it.zoom.api.AsyncRequest;
 
 public class ResultEvent extends Event
 {
@@ -43,10 +44,13 @@ public class ResultEvent extends Event
     public function ResultEvent(type:String,
                                 bubbles:Boolean=false,
                                 cancelable:Boolean=false,
-                                data:*=undefined)
+                                request:AsyncRequest=null,
+                                result:*=undefined)
     {
         super(type, bubbles, cancelable)
-        _data = data
+
+        _request = request
+        _result = result
     }
 
     //--------------------------------------------------------------------------
@@ -55,11 +59,24 @@ public class ResultEvent extends Event
     //
     //--------------------------------------------------------------------------
 
-    private var _data:*
+    /**
+     *  @private
+     */
+    private var _request:AsyncRequest
 
-    public function get data():*
+    public function get request():AsyncRequest
     {
-        return _data
+        return _request
+    }
+
+    /**
+     *  @private
+     */
+    private var _result:*
+
+    public function get result():*
+    {
+        return _result
     }
 
     //--------------------------------------------------------------------------
@@ -68,14 +85,20 @@ public class ResultEvent extends Event
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  @inheritDoc
+     */
     override public function clone():Event
     {
-        return new ResultEvent(type, bubbles, cancelable, data)
+        return new ResultEvent(type, bubbles, cancelable, request, result)
     }
 
+    /**
+     *  @inheritDoc
+     */
     override public function toString():String
     {
-        return formatToString("ResultEvent", "type", "bubbles", "cancelable", "data")
+        return formatToString("ResultEvent", "type", "bubbles", "cancelable", "request", "result")
     }
 }
 

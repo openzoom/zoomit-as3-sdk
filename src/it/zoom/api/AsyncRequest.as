@@ -2,7 +2,7 @@
 //
 //   Copyright 2010 Daniel Gasienica <daniel@gasienica.ch>
 //
-//   Licensed under the Apache License, Version 2.0 (the "License");
+//   Licensed under the Apache License, Version 2.0 (the "License")
 //   you may not use this file except in compliance with the License.
 //   You may obtain a copy of the License at
 //
@@ -25,7 +25,6 @@ import flash.events.IOErrorEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
-import flash.utils.setTimeout;
 
 import it.zoom.api.events.FaultEvent;
 import it.zoom.api.events.ResultEvent;
@@ -40,7 +39,7 @@ import it.zoom.api.events.ResultEvent;
 /**
  *  @author Daniel Gasienica
  */
-public final class AsyncRequest extends EventDispatcher
+public final class AsyncRequest implements IEventDispatcher
 {
     //--------------------------------------------------------------------------
     //
@@ -48,6 +47,9 @@ public final class AsyncRequest extends EventDispatcher
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  @private
+     */
     private static const UNKNOWN_ERROR_MESSAGE:String = "Unknown error."
 
     //--------------------------------------------------------------------------
@@ -63,6 +65,7 @@ public final class AsyncRequest extends EventDispatcher
      */
     public function AsyncRequest(url:String)
     {
+        dispatcher = new EventDispatcher(this)
         request = new URLRequest(url)
         loader = new URLLoader(request)
 
@@ -73,8 +76,9 @@ public final class AsyncRequest extends EventDispatcher
         loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,
             loader_errorHandler, false, 0, true)
 
-        // Make the call asynchronously
-        setTimeout(start, 0)
+        // FIXME Do we need to make the call asynchronous?
+        // setTimeout(start, 0)
+        start()
     }
 
     //--------------------------------------------------------------------------
@@ -83,8 +87,136 @@ public final class AsyncRequest extends EventDispatcher
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  @private
+     */
+    private var dispatcher:EventDispatcher
+
+    /**
+     *  @private
+     */
     private var loader:URLLoader
+
+    /**
+     *  @private
+     */
     private var request:URLRequest
+
+    //--------------------------------------------------------------------------
+    //
+    //  Properties
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  Enables you to attach arbitrary context data to this request.
+     */
+    public var context:*
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  Cancels the asynchronous request if possible.
+     */
+    public function cancel():void
+    {
+        dispose()
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods: IDisposable
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  @inheritDoc
+     */
+    public function dispose():void
+    {
+        if (loader)
+        {
+            try
+            {
+                loader.close()
+            }
+            catch (error:Error)
+            {
+                // Do nothing
+            }
+            finally
+            {
+                loader.removeEventListener(Event.COMPLETE,
+                    loader_completeHandler)
+                loader.removeEventListener(IOErrorEvent.IO_ERROR,
+                    loader_errorHandler)
+                loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,
+                    loader_errorHandler)
+                loader = null
+                request = null
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods: IEventDispatcher
+    //
+    //--------------------------------------------------------------------------
+
+    // I didn't extend EventDispatcher because it provides us with
+    // unnecessary additional event hints during code completion.
+    // Composition avoids this.
+
+    /**
+     *  @inheritDoc
+     */
+    public function addEventListener(type:String,
+                                     listener:Function,
+                                     useCapture:Boolean=false,
+                                     priority:int=0,
+                                     useWeakReference:Boolean=false):void
+    {
+        dispatcher.addEventListener(type, listener, useCapture, priority)
+    }
+
+    /**
+     *  @inheritDoc
+     */
+    public function dispatchEvent(event:Event):Boolean
+    {
+        return dispatcher.dispatchEvent(event)
+    }
+
+    /**
+     *  @inheritDoc
+     */
+    public function hasEventListener(type:String):Boolean
+    {
+        return dispatcher.hasEventListener(type)
+    }
+
+    /**
+     *  @inheritDoc
+     */
+    public function removeEventListener(type:String,
+                                        listener:Function,
+                                        useCapture:Boolean=false):void
+    {
+        dispatcher.removeEventListener(type, listener, useCapture)
+    }
+
+    /**
+     *  @inheritDoc
+     */
+    public function willTrigger(type:String):Boolean
+    {
+        return dispatcher.willTrigger(type)
+    }
 
     //--------------------------------------------------------------------------
     //
@@ -124,53 +256,13 @@ public final class AsyncRequest extends EventDispatcher
 
     //--------------------------------------------------------------------------
     //
-    //  Methods
-    //
-    //--------------------------------------------------------------------------
-
-    public function cancel():void
-    {
-        dispose()
-    }
-
-    //--------------------------------------------------------------------------
-    //
-    //  Methods: IDisposable
-    //
-    //--------------------------------------------------------------------------
-
-    public function dispose():void
-    {
-        if (loader)
-        {
-            try
-            {
-                loader.close()
-            }
-            catch (error:Error)
-            {
-                // Do nothing
-            }
-            finally
-            {
-                loader.removeEventListener(Event.COMPLETE,
-                    loader_completeHandler)
-                loader.removeEventListener(IOErrorEvent.IO_ERROR,
-                    loader_errorHandler)
-                loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,
-                    loader_errorHandler)
-                loader = null
-                request = null
-            }
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    //
     //  Event handlers
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  @private
+     */
     private function loader_completeHandler(event:Event):void
     {
         var event:Event
@@ -180,18 +272,21 @@ public final class AsyncRequest extends EventDispatcher
         var contentInfo:ContentInfo = parseContentInfo(responseXML)
 
         if (contentInfo)
-            event = new ResultEvent(ResultEvent.RESULT, false, false, contentInfo)
+            event = new ResultEvent(ResultEvent.RESULT, false, false, this, contentInfo)
         else
-            event = new FaultEvent(FaultEvent.FAULT, false, false, parseError(responseXML))
+            event = new FaultEvent(FaultEvent.FAULT, false, false, this, parseError(responseXML))
 
         dispatchEvent(event)
 
         dispose()
     }
 
+    /**
+     *  @private
+     */
     private function loader_errorHandler(event:Event):void
     {
-        var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT, false, false, UNKNOWN_ERROR_MESSAGE)
+        var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT, false, false, this, UNKNOWN_ERROR_MESSAGE)
         dispatchEvent(faultEvent)
 
         dispose()

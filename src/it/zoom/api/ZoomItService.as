@@ -18,8 +18,6 @@
 package it.zoom.api
 {
 
-import flash.events.EventDispatcher;
-
 import it.zoom.api.utils.string.format;
 
 /**
@@ -29,7 +27,7 @@ import it.zoom.api.utils.string.format;
  *
  *  @author Daniel Gasienica
  */
-public final class ZoomItService extends EventDispatcher
+public final class ZoomItService
 {
     //--------------------------------------------------------------------------
     //
@@ -37,8 +35,7 @@ public final class ZoomItService extends EventDispatcher
     //
     //--------------------------------------------------------------------------
 
-    private static const API_ENDPOINT:String = "http://api.zoom.it"
-    private static const API_VERSION:String = "v1"
+    public static const ENDPOINT:String = "http://api.zoom.it/v1"
 
     private static const CONTENT_RESOURCE:String = "content"
 
@@ -51,9 +48,18 @@ public final class ZoomItService extends EventDispatcher
     /**
      *  Constructor.
      */
-    public function ZoomItService()
+    public function ZoomItService(endpoint:String=ENDPOINT)
     {
+        this.endpoint = endpoint
     }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Properties
+    //
+    //--------------------------------------------------------------------------
+
+    public var endpoint:String = ENDPOINT
 
     //--------------------------------------------------------------------------
     //
@@ -63,16 +69,24 @@ public final class ZoomItService extends EventDispatcher
 
     public function getContentInfoById(id:String):AsyncRequest
     {
-        var url:String = format("{0}/{1}/{2}/{3}?format=xml",
-            API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, id)
-        return new AsyncRequest(url)
+        // TODO Do we need to keep a reference because of GC?
+        // Experience and this article suggest no:
+        // http://kuwamoto.org/2007/04/25/asynchronous-calls-explained/
+
+        var requestURL:String = format("{0}/{1}/{2}?format=xml",
+            endpoint, CONTENT_RESOURCE, id)
+        return new AsyncRequest(requestURL)
     }
 
     public function getContentInfoByURL(url:String):AsyncRequest
     {
-        var url:String = format("{0}/{1}/{2}/?url={3}&format=xml",
-            API_ENDPOINT, API_VERSION, CONTENT_RESOURCE, encodeURI(url))
-        return new AsyncRequest(url)
+        // TODO Do we need to keep a reference because of GC?
+        // Experience and this article suggest no:
+        // http://kuwamoto.org/2007/04/25/asynchronous-calls-explained/
+
+        var requestURL:String = format("{0}/{1}/?url={2}&format=xml",
+            endpoint, CONTENT_RESOURCE, encodeURI(url))
+        return new AsyncRequest(requestURL)
     }
 }
 
