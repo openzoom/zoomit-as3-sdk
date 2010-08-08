@@ -98,7 +98,7 @@ public final class FaultEvent extends ErrorEvent
     private var _request:AsyncRequest
 
     /**
-     *  Returns the request associated with this event.
+     *  The request associated with this event.
      */
     public function get request():AsyncRequest
     {

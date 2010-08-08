@@ -28,6 +28,7 @@ import flash.net.URLRequest;
 
 import it.zoom.api.events.FaultEvent;
 import it.zoom.api.events.ResultEvent;
+import it.zoom.api.utils.IDisposable;
 import it.zoom.api.utils.formatClassToString;
 
 //--------------------------------------
@@ -52,13 +53,20 @@ import it.zoom.api.utils.formatClassToString;
  */
 [Event(type="it.zoom.api.events.FaultEvent", name="fault")]
 
+//--------------------------------------
+//  Excluded APIs
+//--------------------------------------
+
+[Exclude(name="activate", kind="event")]
+[Exclude(name="deactivate", kind="event")]
+
 /**
  *  The AsyncRequest class provides an abstraction of messaging for API call
  *  invocation. An AsyncRequest allows multiple requests to be made on a remote
  *  destination and will dispatch either a ResultEvent when the remote request is
  *  completed or a FaultEvent if the request fails.
  */
-public final class AsyncRequest implements IEventDispatcher
+public final class AsyncRequest extends EventDispatcher implements IDisposable
 {
     //--------------------------------------------------------------------------
     //
@@ -155,7 +163,7 @@ public final class AsyncRequest implements IEventDispatcher
     /**
      *  Returns the string representation of the specified object.
      */
-    public function toString():String
+    override public function toString():String
     {
         return formatClassToString(this, "context")
     }
@@ -193,62 +201,6 @@ public final class AsyncRequest implements IEventDispatcher
                 request = null
             }
         }
-    }
-
-    //--------------------------------------------------------------------------
-    //
-    //  Methods: IEventDispatcher
-    //
-    //--------------------------------------------------------------------------
-
-    // I didn't extend EventDispatcher because it provides us with
-    // unnecessary additional event hints during code completion.
-    // Composition avoids this.
-
-    /**
-     *  @inheritDoc
-     */
-    public function addEventListener(type:String,
-                                     listener:Function,
-                                     useCapture:Boolean=false,
-                                     priority:int=0,
-                                     useWeakReference:Boolean=false):void
-    {
-        dispatcher.addEventListener(type, listener, useCapture, priority)
-    }
-
-    /**
-     *  @inheritDoc
-     */
-    public function dispatchEvent(event:Event):Boolean
-    {
-        return dispatcher.dispatchEvent(event)
-    }
-
-    /**
-     *  @inheritDoc
-     */
-    public function hasEventListener(type:String):Boolean
-    {
-        return dispatcher.hasEventListener(type)
-    }
-
-    /**
-     *  @inheritDoc
-     */
-    public function removeEventListener(type:String,
-                                        listener:Function,
-                                        useCapture:Boolean=false):void
-    {
-        dispatcher.removeEventListener(type, listener, useCapture)
-    }
-
-    /**
-     *  @inheritDoc
-     */
-    public function willTrigger(type:String):Boolean
-    {
-        return dispatcher.willTrigger(type)
     }
 
     //--------------------------------------------------------------------------

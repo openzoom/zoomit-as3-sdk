@@ -96,6 +96,9 @@ public class ResultEvent extends Event
      */
     private var _request:AsyncRequest
 
+    /**
+     *  The request associated with this event.
+     */
     public function get request():AsyncRequest
     {
         return _request
@@ -106,6 +109,9 @@ public class ResultEvent extends Event
      */
     private var _result:*
 
+    /**
+     *  Result that the request returns.
+     */
     public function get result():*
     {
         return _result
@@ -118,7 +124,7 @@ public class ResultEvent extends Event
     //--------------------------------------------------------------------------
 
     /**
-     *  @inheritDoc
+     *  Returns a string that contains all the properties of the FaultEvent object.
      */
     override public function clone():Event
     {
@@ -126,7 +132,7 @@ public class ResultEvent extends Event
     }
 
     /**
-     *  @inheritDoc
+     *  Returns the string representation of the specified object.
      */
     override public function toString():String
     {

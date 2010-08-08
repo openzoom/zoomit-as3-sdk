@@ -67,7 +67,6 @@ public final class ZoomItService
 
     /**
      *  Indicates the API endpoint of the Zoom.it service without a trailing slash.
-     *  Defaults to http://api.zoom.it/v1
      *
      *  @default http://api.zoom.it/v1
      */
