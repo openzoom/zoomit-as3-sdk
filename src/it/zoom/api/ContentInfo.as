@@ -314,12 +314,12 @@ public final class ContentInfo
 
     //--------------------------------------------------------------------------
     //
-    //  Debug
+    //  Methods: Object
     //
     //--------------------------------------------------------------------------
 
     /**
-     *  @inheritDoc
+     *  Returns the string representation of the specified object.
      */
     public function toString():String
     {

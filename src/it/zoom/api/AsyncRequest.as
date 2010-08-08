@@ -28,16 +28,35 @@ import flash.net.URLRequest;
 
 import it.zoom.api.events.FaultEvent;
 import it.zoom.api.events.ResultEvent;
+import it.zoom.api.utils.formatClassToString;
 
 //--------------------------------------
 //  Events
 //--------------------------------------
 
+/**
+ *  Dispatched when an AsyncRequest returns successfully.
+ *  @eventType it.zoom.api.events.ResultEvent.RESULT
+ *
+ *  @langversion 3.0
+ *  @playerversion Flash 9
+ */
 [Event(type="it.zoom.api.events.ResultEvent", name="result")]
+
+/**
+ *  Dispatched when an AsyncRequest fails.
+ *  @eventType it.zoom.api.events.FaultEvent.FAULT
+ *
+ *  @langversion 3.0
+ *  @playerversion Flash 9
+ */
 [Event(type="it.zoom.api.events.FaultEvent", name="fault")]
 
 /**
- *  @author Daniel Gasienica
+ *  The AsyncRequest class provides an abstraction of messaging for API call
+ *  invocation. An AsyncRequest allows multiple requests to be made on a remote
+ *  destination and will dispatch either a ResultEvent when the remote request is
+ *  completed or a FaultEvent if the request fails.
  */
 public final class AsyncRequest implements IEventDispatcher
 {
@@ -109,7 +128,7 @@ public final class AsyncRequest implements IEventDispatcher
     //--------------------------------------------------------------------------
 
     /**
-     *  Enables you to attach arbitrary context data to this request.
+     *  Holds arbitrary context data for this request.
      */
     public var context:*
 
@@ -125,6 +144,20 @@ public final class AsyncRequest implements IEventDispatcher
     public function cancel():void
     {
         dispose()
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods: Object
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  Returns the string representation of the specified object.
+     */
+    public function toString():String
+    {
+        return formatClassToString(this, "context")
     }
 
     //--------------------------------------------------------------------------

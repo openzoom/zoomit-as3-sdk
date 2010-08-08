@@ -207,12 +207,12 @@ public final class DZIInfo
 
     //--------------------------------------------------------------------------
     //
-    //  Overridden methods: Object
+    //  Methods: Object
     //
     //--------------------------------------------------------------------------
 
     /**
-     * @inheritDoc
+     *  Returns the string representation of the specified object.
      */
     public function toString():String
     {
