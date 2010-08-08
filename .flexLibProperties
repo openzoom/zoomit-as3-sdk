@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" version="3">
+<flexLibProperties includeAllClasses="false" version="3">
   <includeClasses>
-    <classEntry path="it.zoom.api.ZoomItService"/>
+    <classEntry path="it.zoom.api.AsyncRequest"/>
     <classEntry path="it.zoom.api.ContentInfo"/>
     <classEntry path="it.zoom.api.DZIInfo"/>
-    <classEntry path="it.zoom.api.AsyncRequest"/>
-    <classEntry path="it.zoom.api.events.ResultEvent"/>
+    <classEntry path="it.zoom.api.ZoomItService"/>
     <classEntry path="it.zoom.api.events.FaultEvent"/>
+    <classEntry path="it.zoom.api.events.ResultEvent"/>
+    <classEntry path="it.zoom.api.utils.IDisposable"/>
+    <classEntry path="it.zoom.api.utils.formatClassToString"/>
+    <classEntry path="it.zoom.api.utils.string.format"/>
+    <classEntry path="it.zoom.zoomit_internal"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

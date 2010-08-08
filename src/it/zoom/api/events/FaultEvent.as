@@ -28,6 +28,8 @@ import it.zoom.api.AsyncRequest;
  */
 public final class FaultEvent extends ErrorEvent
 {
+	include "../Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants

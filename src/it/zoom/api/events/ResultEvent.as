@@ -27,6 +27,8 @@ import it.zoom.api.AsyncRequest;
  */
 public class ResultEvent extends Event
 {
+	include "../Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants

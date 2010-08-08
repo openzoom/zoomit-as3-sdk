@@ -29,6 +29,8 @@ import it.zoom.api.utils.string.format;
  */
 public final class ZoomItService
 {
+	include "Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants

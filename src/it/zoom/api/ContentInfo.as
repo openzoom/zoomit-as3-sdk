@@ -19,6 +19,7 @@ package it.zoom.api
 {
 
 import it.zoom.api.utils.formatClassToString;
+import it.zoom.zoomit_internal;
 
 /**
  *  The ContentInfo class represents a piece of content on Zoom.it.
@@ -27,6 +28,8 @@ import it.zoom.api.utils.formatClassToString;
  */
 public final class ContentInfo
 {
+	include "Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants

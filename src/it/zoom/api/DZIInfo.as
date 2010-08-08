@@ -29,6 +29,8 @@ import it.zoom.api.utils.formatClassToString;
  */
 public final class DZIInfo
 {
+	include "Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants

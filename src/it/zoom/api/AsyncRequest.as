@@ -20,7 +20,6 @@ package it.zoom.api
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
-import flash.events.IEventDispatcher;
 import flash.events.IOErrorEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.URLLoader;
@@ -68,6 +67,8 @@ import it.zoom.api.utils.formatClassToString;
  */
 public final class AsyncRequest extends EventDispatcher implements IDisposable
 {
+	include "Version.as"
+
     //--------------------------------------------------------------------------
     //
     //  Class constants
