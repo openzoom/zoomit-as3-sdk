@@ -35,8 +35,14 @@ public final class ZoomItService
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  Specifies the default API endpoint for the Zoom.it service.
+     */
     public static const ENDPOINT:String = "http://api.zoom.it/v1"
 
+    /**
+     *  @private
+     */
     private static const CONTENT_RESOURCE:String = "content"
 
     //--------------------------------------------------------------------------
@@ -59,6 +65,12 @@ public final class ZoomItService
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  Indicates the API endpoint of the Zoom.it service without a trailing slash.
+     *  Defaults to http://api.zoom.it/v1
+     *
+     *  @default http://api.zoom.it/v1
+     */
     public var endpoint:String = ENDPOINT
 
     //--------------------------------------------------------------------------
@@ -67,9 +79,12 @@ public final class ZoomItService
     //
     //--------------------------------------------------------------------------
 
+    /**
+     *  Requests the info for the content given by the Zoom.it ID.
+     */
     public function getContentInfoById(id:String):AsyncRequest
     {
-        // TODO Do we need to keep a reference because of GC?
+        // TODO Do we need to keep a reference because of the GC?
         // Experience and this article suggest no:
         // http://kuwamoto.org/2007/04/25/asynchronous-calls-explained/
 
@@ -78,9 +93,12 @@ public final class ZoomItService
         return new AsyncRequest(requestURL)
     }
 
+    /**
+     *  Requests the info for the Zoom.it content created from the given URL.
+     */
     public function getContentInfoByURL(url:String):AsyncRequest
     {
-        // TODO Do we need to keep a reference because of GC?
+        // TODO Do we need to keep a reference because of the GC?
         // Experience and this article suggest no:
         // http://kuwamoto.org/2007/04/25/asynchronous-calls-explained/
 

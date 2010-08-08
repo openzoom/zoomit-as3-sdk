@@ -20,6 +20,10 @@ package it.zoom.api.utils
 
 import flash.utils.getQualifiedClassName;
 
+/**
+ *  The formatClassToString function returns string representation
+ *  of the given instance and fields.
+ */
 public function formatClassToString(instance:Object, ...fields):String
 {
     var qualifiedClassName:String = getQualifiedClassName(instance)

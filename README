@@ -1,0 +1,17 @@
+Zoom.it API ActionScript 3 library
+==================================
+
+Zoom.it is a free service for viewing and sharing high-resolution imagery.
+The Zoom.it API provides you with programmatic access to the Zoom.it service.
+This library lets you access this API with Adobe Flash, Flex and AIR
+using ActionScript 3.
+You can display the Deep Zoom images hosted on the Zoom.it using the free and
+open source OpenZoom SDK available at
+http://openzoom.org
+
+Documentation about the Zoom.it service and API are available at
+http://zoom.it
+
+The Zoom.it API ActionScript 3 library was created by Daniel Gasienica
+and is licensed under the Apache Licence, Version 2.0
+http://www.apache.org/licenses/LICENSE-2.0.html

@@ -31,6 +31,19 @@ public final class DZIInfo
 {
     //--------------------------------------------------------------------------
     //
+    //  Class constants
+    //
+    //--------------------------------------------------------------------------
+
+    private static const URL:String = "url"
+    private static const WIDTH:String = "width"
+    private static const HEIGHT:String = "height"
+    private static const TILE_SIZE:String = "tileSize"
+    private static const TILE_OVERLAP:String = "tileOverlap"
+    private static const TILE_FORMAT:String = "tileFormat"
+
+    //--------------------------------------------------------------------------
+    //
     //  Constructor
     //
     //--------------------------------------------------------------------------
@@ -57,15 +70,17 @@ public final class DZIInfo
 
     /**
      *  Constructor.
+     *
+     *  Creates a new DZIInfo instance from XML manifest.
      */
     public static function fromXML(xml:XML):DZIInfo
     {
-        var url:String = xml.url
-        var width:uint = xml.width
-        var height:uint = xml.height
-        var tileSize:uint = xml.tileSize
-        var tileOverlap:uint = xml.tileOverlap
-        var tileFormat:String = xml.tileFormat
+        var url:String = xml.child(URL)
+        var width:uint = xml.child(WIDTH)
+        var height:uint = xml.child(HEIGHT)
+        var tileSize:uint = xml.child(TILE_SIZE)
+        var tileOverlap:uint = xml.child(TILE_OVERLAP)
+        var tileFormat:String = xml.child(TILE_FORMAT)
 
         return new DZIInfo(url, width, height, tileSize, tileOverlap, tileFormat)
     }
@@ -86,7 +101,9 @@ public final class DZIInfo
     private var _url:String
 
     /**
+     *  Indicates the URL of the Deep Zoom image manifest.
      *
+     *  @see http://gasi.ch/blog/inside-deep-zoom-2
      */
     public function get url():String
     {
@@ -103,7 +120,9 @@ public final class DZIInfo
     private var _width:uint
 
     /**
+     *  Indicates the width of the Deep Zoom image, in pixels.
      *
+     *  @see http://gasi.ch/blog/inside-deep-zoom-2
      */
     public function get width():uint
     {
@@ -120,7 +139,9 @@ public final class DZIInfo
     private var _height:uint
 
     /**
+     *  Indicates the height of the Deep Zoom image, in pixels.
      *
+     *  @see http://gasi.ch/blog/inside-deep-zoom-2
      */
     public function get height():uint
     {
@@ -137,7 +158,9 @@ public final class DZIInfo
     private var _tileSize:uint
 
     /**
+     *  Indicates the tile size of the Deep Zoom image, in pixels.
      *
+     *  @see http://gasi.ch/blog/inside-deep-zoom-2
      */
     public function get tileSize():uint
     {
@@ -154,7 +177,9 @@ public final class DZIInfo
     private var _tileOverlap:uint
 
     /**
+     *  Indicates the tile overlap of the Deep Zoom image, in pixels.
      *
+     *  @see http://gasi.ch/blog/inside-deep-zoom-2
      */
     public function get tileOverlap():uint
     {
@@ -171,7 +196,9 @@ public final class DZIInfo
     private var _tileFormat:String
 
     /**
-     *
+     *  Indicates the tile format of the Deep Zoom image.
+     *  Deep Zoom (Silverlight), Seadragon Ajax (JavaScript) and Flash (OpenZoom)
+     *  support either <code>jpg</code> or <code>png</code>.
      */
     public function get tileFormat():String
     {
@@ -184,8 +211,12 @@ public final class DZIInfo
     //
     //--------------------------------------------------------------------------
 
+    /**
+     * @inheritDoc
+     */
     public function toString():String
     {
+        // Returns the string representation of the specified object.
         return formatClassToString(this, "url", "width", "height", "tileSize",
             "tileOverlap", "tileFormat")
     }
