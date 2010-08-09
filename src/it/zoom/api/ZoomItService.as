@@ -23,9 +23,10 @@ import it.zoom.api.utils.string.format;
 /**
  *  The ZoomItService class provides access to the Zoom.it web API.
  *
+ *  @includeExample ZoomItServiceExample.as
+ * 
  *  @see http://api.zoom.it
  *
- *  @author Daniel Gasienica
  */
 public final class ZoomItService
 {
