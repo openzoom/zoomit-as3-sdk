@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testrun name="" >
+<testsuite  name="Default Test Suite" project="zoomit">
+<testsuite name="it.zoom.api:ZoomItServiceTest" type="testcaseclass"/>
+</testsuite>
+</testrun>

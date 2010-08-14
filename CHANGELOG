@@ -1,0 +1,16 @@
+Zoom.it ActionScript 3 SDK
+==========================
+
+Version 0.8.1 - August XX, 2010
+===================================
+
+  - Added IZoomItService and IAsyncRequest interfaces to enable better
+    testing through mocking of those implementations.
+
+  - Fixed bug URL encoding bug (encodeURI instead of encodeURIComponent)
+    in ZoomItService.getContentByURL.
+  
+Version 0.8 - August 10, 2010
+===============================
+
+  - First public release.

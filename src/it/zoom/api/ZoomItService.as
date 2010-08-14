@@ -28,7 +28,7 @@ import it.zoom.api.utils.string.format;
  *  @see http://api.zoom.it
  *
  */
-public final class ZoomItService
+public final class ZoomItService implements IZoomItService
 {
 	include "Version.as"
 
@@ -67,13 +67,24 @@ public final class ZoomItService
     //  Properties
     //
     //--------------------------------------------------------------------------
+    
+    /**
+     *  @private
+     */ 
+    private var _endpoint:String = ENDPOINT
 
     /**
-     *  Indicates the API endpoint of the Zoom.it service without a trailing slash.
-     *
-     *  @default http://api.zoom.it/v1
-     */
-    public var endpoint:String = ENDPOINT
+     *  @inheritDoc
+     */ 
+    public function get endpoint():String
+    {
+        return _endpoint
+    }
+        
+    public function set endpoint(value:String):void
+    {
+        _endpoint = value
+    }
 
     //--------------------------------------------------------------------------
     //
@@ -82,9 +93,9 @@ public final class ZoomItService
     //--------------------------------------------------------------------------
 
     /**
-     *  Requests the info for the content given by the Zoom.it ID.
+     *  @inheritDoc
      */
-    public function getContentInfoById(id:String):AsyncRequest
+    public function getContentInfoById(id:String):IAsyncRequest
     {
         // TODO Do we need to keep a reference because of the GC?
         // Experience and this article suggest no:
@@ -96,9 +107,9 @@ public final class ZoomItService
     }
 
     /**
-     *  Requests the info for the Zoom.it content created from the given URL.
+     *  @inheritDoc
      */
-    public function getContentInfoByURL(url:String):AsyncRequest
+    public function getContentInfoByURL(url:String):IAsyncRequest
     {
         // TODO Do we need to keep a reference because of the GC?
         // Experience and this article suggest no:

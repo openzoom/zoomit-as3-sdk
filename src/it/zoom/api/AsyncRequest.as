@@ -66,7 +66,8 @@ import it.zoom.api.utils.formatClassToString;
  *  destination and will dispatch either a ResultEvent when the remote request is
  *  completed or a FaultEvent if the request fails.
  */
-public final class AsyncRequest extends EventDispatcher implements IDisposable
+public final class AsyncRequest extends EventDispatcher implements IAsyncRequest,
+                                                                   IDisposable
 {
 	include "Version.as"
 
@@ -132,20 +133,33 @@ public final class AsyncRequest extends EventDispatcher implements IDisposable
     //--------------------------------------------------------------------------
 
     /**
-     *  Holds arbitrary context data for this request.
+     *  @private
      */
-    public var context:*
+    private var _context:*
+
+    /**
+     *  @inheritDoc
+     */
+    public function get context():*
+    {
+        return _context
+    }
+
+    public function set context(value:*):void
+    {
+        _context = value
+    }
 
     //--------------------------------------------------------------------------
     //
     //  Methods
     //
     //--------------------------------------------------------------------------
-
+    
     /**
-     *  Cancels the asynchronous request if possible.
-     */
-    public function cancel():void
+     *  @inheritDoc
+     */ 
+    public function stop():void
     {
         dispose()
     }
