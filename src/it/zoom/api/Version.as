@@ -22,4 +22,4 @@ import it.zoom.zoomit_internal;
  *
  *  Version string for this class.
  */
-zoomit_internal static const VERSION:String = "0.8.0.0"
+zoomit_internal static const VERSION:String = "0.8.1.0"

@@ -24,6 +24,7 @@ import flash.events.IOErrorEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
+import flash.utils.setTimeout;
 
 import it.zoom.api.events.FaultEvent;
 import it.zoom.api.events.ResultEvent;
@@ -93,7 +94,6 @@ public final class AsyncRequest extends EventDispatcher implements IDisposable
      */
     public function AsyncRequest(url:String)
     {
-        dispatcher = new EventDispatcher(this)
         request = new URLRequest(url)
         loader = new URLLoader(request)
 
@@ -105,8 +105,8 @@ public final class AsyncRequest extends EventDispatcher implements IDisposable
             loader_errorHandler, false, 0, true)
 
         // FIXME Do we need to make the call asynchronous?
-        // setTimeout(start, 0)
-        start()
+         setTimeout(start, 0)
+//        start()
     }
 
     //--------------------------------------------------------------------------
@@ -114,11 +114,6 @@ public final class AsyncRequest extends EventDispatcher implements IDisposable
     //  Variables
     //
     //--------------------------------------------------------------------------
-
-    /**
-     *  @private
-     */
-    private var dispatcher:EventDispatcher
 
     /**
      *  @private

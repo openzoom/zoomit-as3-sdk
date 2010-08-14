@@ -105,7 +105,7 @@ public final class ZoomItService
         // http://kuwamoto.org/2007/04/25/asynchronous-calls-explained/
 
         var requestURL:String = format("{0}/{1}/?url={2}&format=xml",
-            endpoint, CONTENT_RESOURCE, encodeURI(url))
+            endpoint, CONTENT_RESOURCE, encodeURIComponent(url))
         return new AsyncRequest(requestURL)
     }
 }
