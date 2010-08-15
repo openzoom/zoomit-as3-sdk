@@ -12,6 +12,8 @@
     <classEntry path="it.zoom.api.utils.string.format"/>
     <classEntry path="it.zoom.zoomit_internal"/>
     <classEntry path="it.zoom.api.IAsyncRequest"/>
+    <classEntry path="ZoomItServiceExample"/>
+    <classEntry path="ZoomItServiceTest"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
