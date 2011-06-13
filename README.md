@@ -21,6 +21,8 @@ and is licensed under the [Apache License, Version 2.0](http://www.apache.org/li
 Example
 -------
 
+```actionscript
+
     ////////////////////////////////////////////////////////////////////////////////
     //
     //   Copyright 2010 Daniel Gasienica <daniel@gasienica.ch>
@@ -87,3 +89,4 @@ Example
     }
 
     }
+```
